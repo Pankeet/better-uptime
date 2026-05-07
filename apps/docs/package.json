@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "axios": "^1.16.0",
+    "dotenv": "^17.4.2",
     "next": "16.2.0",
+    "next-auth": "^4.24.14",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
