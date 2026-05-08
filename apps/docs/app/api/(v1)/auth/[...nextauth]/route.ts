@@ -1,5 +1,5 @@
-import NextAuth from "next-auth";
 import "dotenv/config";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { prismaClient } from "@repo/store/client";

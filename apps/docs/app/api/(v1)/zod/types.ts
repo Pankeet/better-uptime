@@ -5,3 +5,9 @@ export const User = z.object({
     email : z.email(),
     password : z.string().trim()
 })
+
+export const Website = z.object({
+    url : z.url(),
+    createdAt : z.string().datetime(),
+    user_id : z.string()
+})
