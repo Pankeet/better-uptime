@@ -13,16 +13,19 @@
   "dependencies": {
     "@repo/ui": "workspace:*",
     "axios": "^1.16.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "next": "16.2.0",
     "next-auth": "^4.24.14",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/store":"workspace:*",
+    "@repo/store": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",

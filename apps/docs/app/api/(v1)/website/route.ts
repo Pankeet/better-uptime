@@ -4,25 +4,19 @@ import { prismaClient } from "@repo/store/client";
 export async function POST(req : NextRequest){
     try{
         const body = await req.json();
-        const { url , timeAdded } = body;
+        const { url, createdAt, user_id } = body;
 
-        prismaClient.website.create({
+        const website = await prismaClient.website.create({
             data : {
-                url,timeAdded
+                url,createdAt,user_id
             }
         });
         return NextResponse.json({
-            message : `url:${url} Added Successfully !`
+            message : `url:${url} Added Successfully !`,
+            id : website.id
         },{status: 200})
     }catch(err){
         console.error(err);
-
         return NextResponse.json({message : "Something went wrong !"}, {status : 500})
     }
-}
-
-export function GET(){
-    return NextResponse.json({
-        message : "Server running !"
-    })
 }
