@@ -8,28 +8,28 @@ export async function GET(req : NextRequest, {params} : {params : Promise<{websi
     try{
         const token = await getToken({req,secret: process.env.NEXTAUTH_SECRET});
         if(token) {
-                const website = await prismaClient.website.findFirst({
-                    where: {
-                        user_id: token.id as string,
-                        id: websiteId
-                    },
-                    include:{
-                        ticks:{
-                            take:1,
-                            orderBy: [{
-                                createdAt: "desc"
-                            }]
-                        }
+            const website = await prismaClient.website.findFirst({
+                where: {
+                    user_id: token.id,
+                    id: websiteId
+                },
+                include:{
+                    ticks:{
+                        take:1,
+                        orderBy: [{
+                            createdAt: "desc"
+                        }]
                     }
-                })
-                if(website) return NextResponse.json({message : website},{status:200});
-                else return NextResponse.json({message: "Cannot get website"},{status:403});
-            }
-            else{
-                return NextResponse.json({
-                    message : "Invalid User !"
-                },{status:402})
-            }
+                }
+            })
+            if(website) return NextResponse.json({url: website.url,id:website.id},{status:200});
+            else return NextResponse.json({message: "Cannot get website"},{status:411});
+        }
+        else{
+            return NextResponse.json({
+                message : "Invalid User !"
+            },{status:402})
+        }
     }catch(e){
         console.error(e);
         return NextResponse.json({

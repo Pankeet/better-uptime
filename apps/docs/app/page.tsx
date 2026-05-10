@@ -5,7 +5,7 @@ export default async function Home(){
 
   return(
     <div>
-      {JSON.stringify(session)}
+      {JSON.stringify(session?.user)}
     </div>
   )
 }
