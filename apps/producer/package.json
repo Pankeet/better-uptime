@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/store":"workspace:*",
     "@types/node": "^22.15.3",
     "typescript": "^6.0.3"
   },

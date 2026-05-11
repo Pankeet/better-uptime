@@ -88,6 +88,9 @@ importers:
         specifier: ^5.12.1
         version: 5.12.1
     devDependencies:
+      '@repo/store':
+        specifier: workspace:*
+        version: link:../../packages/store
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -100,10 +103,19 @@ importers:
 
   apps/worker:
     dependencies:
+      axios:
+        specifier: ^1.16.0
+        version: 1.16.0
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       redis:
         specifier: ^5.12.1
         version: 5.12.1
     devDependencies:
+      '@repo/store':
+        specifier: workspace:*
+        version: link:../../packages/store
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config

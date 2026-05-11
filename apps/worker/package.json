@@ -12,10 +12,13 @@
   "license": "ISC",
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/store": "workspace:*",
     "@types/node": "^22.15.3",
     "typescript": "^6.0.3"
   },
   "dependencies": {
+    "axios": "^1.16.0",
+    "dotenv": "^17.4.2",
     "redis": "^5.12.1"
   }
 }

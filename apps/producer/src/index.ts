@@ -1,4 +1,10 @@
 import { createClient } from "redis";
+import { prismaClient } from "@repo/store/client";
+
+type Website_Data = {
+  url : string;
+  id: string;
+}
 
 async function main(){
 const client = await createClient({
@@ -7,12 +13,19 @@ const client = await createClient({
   .on("error", (err) => console.log("Redis Client Error", err))
   .connect();
 
-  const res = await client.xAdd('better-uptime:websites','*',{
-    url: "google.com",
-    id: "1"
-  })
-  console.log(res);
-  client.destroy();
+  const AllWebsites : Website_Data[] = await prismaClient.website.findMany();
+  if(AllWebsites){
+    for(const website of AllWebsites){
+      try{
+        await client.xAdd('better-uptime:websites','*',{
+          url : website.url,
+          id: website.id
+        })
+      }catch(err){
+        console.error(`Failed to add website ${website.id} to Redis`, err);
+      }
+    }
+  }
 }
 
-main();
+setInterval(() => main(), 3 * 60 * 1000);
