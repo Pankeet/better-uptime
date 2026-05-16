@@ -2,15 +2,11 @@
   "name": "@repo/store",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
-  "type": "module",
-
-  "exports": {
-    "./client" : "./src/index.ts"    
-  },
-
+  "main": "dist/prisma.js",
+  "types": "dist/prisma.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
