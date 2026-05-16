@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prismaClient } from "@repo/store/client";
+import { prismaClient } from "@repo/store/";
 import { Website } from "../zod/types";
 
 export async function POST(req : NextRequest){

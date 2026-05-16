@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import "dotenv/config";
-import { prismaClient } from "@repo/store/client";
+import { prismaClient } from "@repo/store/";
 import { getToken } from "next-auth/jwt";
 
 export async function GET(req : NextRequest, {params} : {params : Promise<{websiteId : string}>} ): Promise<NextResponse> {
