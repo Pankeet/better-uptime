@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import { User } from "../zod/types";
-import { prismaClient } from "@repo/store/";
+import { prismaClient } from "@repo/store";
 
 export async function POST(req : NextRequest){
     try{

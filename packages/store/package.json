@@ -2,11 +2,20 @@
   "name": "@repo/store",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/prisma.js",
-  "types": "dist/prisma.d.ts",
+  "private": true,
+  "main": "./dist/prisma.js",
+  "types": "./dist/prisma.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "postinstall": "prisma generate"
+  },
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "keywords": [],
   "author": "",
