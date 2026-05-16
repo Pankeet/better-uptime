@@ -3,15 +3,15 @@ import "dotenv/config";
 import { prismaClient } from "@repo/store/";
 import { getToken } from "next-auth/jwt";
 
-export async function GET(req : NextRequest, {params} : {params : Promise<{websiteId : string}>} ): Promise<NextResponse> {
-    const { websiteId } = await params;
+export async function GET(req : NextRequest, {params} : {params : Promise<{website : string}>} ): Promise<NextResponse> {
+    const { website } = await params;
     try{
         const token = await getToken({req,secret: process.env.NEXTAUTH_SECRET});
         if(token) {
-            const website = await prismaClient.website.findFirst({
+            const website_deatils = await prismaClient.website.findFirst({
                 where: {
                     user_id: token.id,
-                    id: websiteId
+                    id: website
                 },
                 include:{
                     ticks:{
@@ -22,7 +22,7 @@ export async function GET(req : NextRequest, {params} : {params : Promise<{websi
                     }
                 }
             })
-            if(website) return NextResponse.json({url: website.url,id:website.id},{status:200});
+            if(website_deatils) return NextResponse.json({url: website_deatils.url,id:website_deatils.id},{status:200});
             else return NextResponse.json({message: "Cannot get website"},{status:411});
         }
         else{

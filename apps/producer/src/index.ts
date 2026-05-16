@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import { prismaClient } from "@repo/store/client";
+import { prismaClient } from "@repo/store/";
 
 type Website_Data = {
   url : string;
