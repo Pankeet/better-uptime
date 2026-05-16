@@ -13,8 +13,8 @@
 
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/prisma.d.ts",
+      "default": "./dist/prisma.js"
     }
   },
   "keywords": [],
