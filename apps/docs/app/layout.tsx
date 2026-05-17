@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-});
+const alan = localFont({
+  src: "../public/fonts/Alan_Sans/AlanSans-VariableFont_wght.ttf",
+  variable: "--font-alan",
+  display : "swap"
+})
 
 export const metadata: Metadata = {
   title: "Better Uptime",
@@ -22,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className="h-full antialiased" > 
+      <body className={`${alan.className}`}>
         {children}
       </body>
     </html>
