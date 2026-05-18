@@ -120,13 +120,13 @@ importers:
       axios:
         specifier: ^1.16.0
         version: 1.16.0
-      dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
       redis:
         specifier: ^5.12.1
         version: 5.12.1
     devDependencies:
+      '@repo/redis-stream':
+        specifier: workspace:*
+        version: link:../../packages/redis
       '@repo/store':
         specifier: workspace:*
         version: link:../../packages/store
@@ -136,6 +136,9 @@ importers:
       '@types/node':
         specifier: ^22.15.3
         version: 22.15.3
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
