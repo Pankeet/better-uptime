@@ -4,19 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build":"tsc",
-    "dev":"tsc && node dist/index.js"
+    "build": "tsc",
+    "dev": "tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@repo/redis-stream": "workspace:*",
+    "@repo/store": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@repo/store":"workspace:*",
     "@types/node": "^22.15.3",
-    "typescript": "^6.0.3"
-  },
-  "dependencies": {
-    "redis": "^5.12.1"
+    "typescript": "^6.0.3",
+    "dotenv": "^17.4.2"
   }
 }

@@ -7,8 +7,7 @@
   "types": "./dist/prisma.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "postinstall": "prisma generate"
+    "build": "tsc"
   },
 
   "exports": {

@@ -6,43 +6,43 @@ datasource db {
   provider = "postgresql"
 }
 
+model Website {
+  id        String        @id @default(uuid())
+  url       String        @unique
+  createdAt DateTime      @default(now())
+  user_id   String
+  user      User          @relation(fields: [user_id], references: [id])
+  ticks     WebsiteTick[]
+}
+
+model Region {
+  id    String        @id @default(uuid())
+  name  String
+  ticks WebsiteTick[]
+}
+
+model WebsiteTick {
+  id               String        @id @default(uuid())
+  response_time_ms Int
+  status           WebsiteStatus
+  region_id        String
+  website_id       String
+  createdAt        DateTime      @default(now())
+  region           Region        @relation(fields: [region_id], references: [id])
+  website          Website       @relation(fields: [website_id], references: [id])
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  name     String
+  avatar   String?
+  password String?
+  websites Website[]
+}
+
 enum WebsiteStatus {
   Up
   Down
   Unknown
-}
-
-model Website {
-  id                  String            @id   @default(uuid())
-  url                 String            @unique
-  createdAt           DateTime
-  user_id             String
-  user                User              @relation(fields: [user_id], references: [id])
-  ticks               WebsiteTick[]  
-}
-
-model Region {
-  id                  String            @id   @default(uuid())
-  name                String
-  ticks               WebsiteTick[]
-}
-
-model WebsiteTick {
-  id                  String            @id   @default(uuid())
-  response_time_ms    Int
-  status              WebsiteStatus
-  region_id           String
-  website_id          String
-  createdAt           DateTime          @default(now())
-  region              Region            @relation(fields: [region_id], references: [id])
-  website             Website           @relation(fields: [website_id],references: [id])
-}
-
-model User {
-  id                  String            @id   @default(uuid())
-  email               String            @unique
-  name                String
-  avatar              String?
-  password            String?
-  websites            Website[]
 }

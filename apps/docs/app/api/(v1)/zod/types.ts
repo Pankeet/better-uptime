@@ -8,6 +8,5 @@ export const User = z.object({
 
 export const Website = z.object({
     url : z.url(),
-    createdAt : z.string().datetime(),
     user_id : z.string()
 })

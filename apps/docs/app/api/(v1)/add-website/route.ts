@@ -9,10 +9,10 @@ export async function POST(req : NextRequest){
 
         if(website_details.success === false) return NextResponse.json({message : "Invalid Semantics"},{status:402});
         else{
-            const { url, createdAt, user_id } = website_details.data;
+            const { url, user_id } = website_details.data;
             const website = await prismaClient.website.create({
                 data : {
-                    url,createdAt,user_id
+                    url,user_id
                 }
             });
 
