@@ -4,8 +4,8 @@ export default async function Home(){
   const session = await getServerSession();
 
   return(
-    <div>
-      {JSON.stringify(session?.user)}
-    </div>
+    <main className="flex h-screen w-full text-6xl justify-center items-center">
+        Under Development !
+    </main>
   )
 }
