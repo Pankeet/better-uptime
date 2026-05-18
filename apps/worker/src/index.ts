@@ -2,6 +2,7 @@ import "dotenv/config";
 import { xReadGroup, xAckBulk } from "@repo/redis-stream/client";
 import axios from "axios";
 import { prismaClient } from "@repo/store";
+
 type Website_Data = {
   url : string;
   id: string;
@@ -51,7 +52,7 @@ async function main(){
             if(!res) {
                 continue;
             }
-            let promises = res.map(({message} : {message : {url:string,id:string}}) => fetchWebsite(message.url,message.id));
+            let promises = res.map(({message} : {message: Website_Data}) => fetchWebsite(message.url,message.id));
             await Promise.all(promises);
             console.log(promises.length);
       

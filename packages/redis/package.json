@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "exports":{
-    "./client":"./index.ts"
+    "./client":"./build/index.js"
+  },
+  "scripts": {
+    "build":"tsc"
   },
   "keywords": [],
   "author": "",
