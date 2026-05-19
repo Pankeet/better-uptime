@@ -42,9 +42,9 @@ export default function SignUp(){
             toast.error("Please enter a email to verify !",{id:toast_verify_otp});
             return;
         }
-
+        const data = {email};
         try{
-            const response = await axios.post("/api/send-otp",{email});
+            const response = await axios.post("/api/send-otp",{data});
             if(response.data?.success) {
                 setVerifyEmail(true);
                 tick();

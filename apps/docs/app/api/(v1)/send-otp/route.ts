@@ -5,7 +5,7 @@ import { prismaClient } from "@repo/store";
 export async function POST(req : NextRequest){
     try{
         const body = await req.json();
-        const { email } = body;
+        const { email } = body.data;
 
         if(email) {
             const verify_email = /^(?!\.)(?!.*\.\.)[a-zA-Z0-9._%+-]+(?<!\.)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
