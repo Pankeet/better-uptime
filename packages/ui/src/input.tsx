@@ -1,13 +1,16 @@
-type size = "xs" | "ss" | "sm" | "md" | "lg";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+type Size = "xs" | "ss" | "sm" | "md" | "lg";
 
-type inputProps = {
+type InputProps = {
     readonly type : string,
     readonly isPassword : boolean,
     readonly label : string,
     readonly placeholder? : string,
-    readonly size : size,
-    readonly text_size : size,
-    readonly maxlength? : number
+    readonly size : Size,
+    readonly text_size : Size,
+    readonly maxLength? : number
+    readonly inputRef?: React.RefObject<HTMLInputElement | null>
 }
 
 const width = {
@@ -34,11 +37,39 @@ const labelsize = {
     lg: "lg:text-xl mb-2"
 }
 
-export default function InputForm(Props : inputProps){
+function NormalInput( {Props} : Readonly<{Props :InputProps}>){
+    return  <input 
+                ref={Props.inputRef} 
+                type={Props.type} 
+                placeholder={Props.placeholder} 
+                className={`border-none mt-2 bg-[#384150] rounded-lg ${width[Props.size]} ${textSize[Props.text_size]}`} maxLength={Props.maxLength} />
+}
+
+function PassWordInput( {Props} : Readonly<{Props: InputProps}>){
+
+    const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false);
+
+    return <div className="relative w-fit">
+                <div>
+                    <input ref={Props.inputRef}
+                            type={visiblePassword ? "text" : "password"}
+                            onBlur={() => setVisiblePassword(false)}
+                            className={`border-none mt-2 bg-[#384150] rounded-lg pr-10 ${width[Props.size]} ${textSize[Props.text_size]}`} />
+                </div>
+                
+                <button type="button" onClick={() => setVisiblePassword(!visiblePassword)} className="absolute right-4 top-8 -translate-y-1/2 cursor-pointer">
+                    {visiblePassword ? <Eye width={20} height={20}/> : <EyeOff width={20} height={20}/>}
+                </button>
+        </div>
+}
+
+export default function InputForm(Props : InputProps){
     return (
         <main>
             <div className={`${labelsize[Props.size]}`}>{Props.label + " "}*</div>
-            <input type={Props.type} placeholder={Props?.placeholder} className={`border-none mt-2 bg-[#384150] rounded-lg ${width[Props.size]} ${textSize[Props.text_size]}`} maxLength={Props.maxlength} />
+            {!Props.isPassword && <NormalInput Props={Props} />}
+            
+            {Props.isPassword && <PassWordInput Props={Props} />}
         </main>
     )
 }

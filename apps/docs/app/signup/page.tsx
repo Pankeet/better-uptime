@@ -47,14 +47,18 @@ export default function SignUp(){
             <span className="text-3xl text-center text-white pt-5">Lets get Started !</span>
             <form onSubmit={signup} className="flex flex-col justify-center lg:items-start items-center mt-10 gap-6 px-12 sm:px-10 lg:px-20">
 
-                <InputForm type="email" label="Work Email" placeholder="jsonroy@gmail.com" isPassword={false} size="lg" text_size="lg"/>
+                <InputForm type="email" label="Work Email" placeholder="jsonroy@gmail.com" isPassword={false} size="md" text_size="lg"/>
 
                 <div className="flex justify-end w-full">
                     <button type="button" disabled={otpCooldown} className={`${otpCooldown ? "bg-gray-600 cursor-not-allowed" : "bg-purple-700 hover:bg-purple-900"} border bg-purple-700 hover:bg-purple-900 transition-colors duration-300 text-white px-3 py-1.5 rounded-xl text-md cursor-pointer`} onClick={verifyOTP}>{otpCooldown ? "Wait 2 mins" : "verify email"}</button>
                 </div>
 
                 <div className={`${verifyemail ? "block" : "hidden"}`}>
-                    <InputForm type="text" label="OTP" isPassword={true} size="xs" text_size="xs" maxlength={6}/>
+                    <InputForm type="text" label="OTP" isPassword={true} size="xs" text_size="xs" maxLength={6}/>
+                </div>
+
+                <div>
+                    <InputForm type="text" label="Password" isPassword={true} size="md" text_size="md"/>
                 </div>
 
                 <div className="lg:flex gap-7">
