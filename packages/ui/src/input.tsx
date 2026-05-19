@@ -11,6 +11,7 @@ type InputProps = {
     readonly text_size : Size,
     readonly maxLength? : number
     readonly inputRef?: React.RefObject<HTMLInputElement | null>
+    readonly disabled?: boolean
 }
 
 const width = {
@@ -41,8 +42,9 @@ function NormalInput( {Props} : Readonly<{Props :InputProps}>){
     return  <input 
                 ref={Props.inputRef} 
                 type={Props.type} 
+                disabled={Props.disabled}
                 placeholder={Props.placeholder} 
-                className={`border-none mt-2 bg-[#384150] rounded-lg ${width[Props.size]} ${textSize[Props.text_size]}`} maxLength={Props.maxLength} />
+                className={`border-none mt-2 bg-[#384150] rounded-lg ${width[Props.size]} ${textSize[Props.text_size]} ${Props.disabled ? "bg-gray-700 cursor-not-allowed opacity-85" : ""}`} maxLength={Props.maxLength} />
 }
 
 function PassWordInput( {Props} : Readonly<{Props: InputProps}>){
