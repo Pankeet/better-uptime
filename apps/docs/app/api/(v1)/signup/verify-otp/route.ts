@@ -6,7 +6,7 @@ export async function POST(req:NextRequest){
     try{
         const body = await req.json();
         console.log(body);
-        const { email, otp } = body.data_verify;
+        const { email, otp } = body.data;
         console.log(otp);
         console.log(email);
 
