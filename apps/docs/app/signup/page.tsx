@@ -78,12 +78,10 @@ async function signup(e: React.FormEvent){
         toast.error("Please enter the otp to signup !",{id:loadingToast});
         return;
     }
+    const data = {email,otp}
     try{
-        const response = await axios.get("/api/signup",{
-            params: {
-                email,otp
-            }
-        })
+        const response = await axios.post("/api/signup/verify-otp",{data});
+        console.log(response.data.message);
         if(response.data.success) {
             if(!password || !firstname || !lastname){
                 toast.error("Please fill your details first !",{id:loadingToast});
@@ -110,24 +108,24 @@ async function signup(e: React.FormEvent){
 
     return <main className="grid lg:grid-cols-2 min-h-screen text-white" >
         <section className="flex flex-col min-h-screen bg-[#121927]">
-            <span className="text-3xl text-center text-white pt-5">Lets get Started !</span>
+            <span className="text-3xl text-center text-white lg:pt-9 pt-16">Lets get Started !</span>
             <form onSubmit={signup} className="flex flex-col justify-center lg:items-start items-center mt-10 gap-6 px-12 sm:px-10 lg:px-20">
                 
                 <InputForm disabled={verifiedEmail} inputRef={emailRef} type="email" label="Work Email" placeholder="jsonroy@gmail.com" isPassword={false} size="md" text_size="lg"/>
 
                 <div className="flex justify-end w-full">
-                    <button type="button" disabled={otpCooldown} className={`${ otpCooldown ? "bg-gray-600 cursor-not-allowed" : "bg-purple-700 hover:bg-purple-900 cursor-pointer"} border transition-colors duration-300 text-white px-3 py-1.5 rounded-xl text-md`} onClick={verifyOTP}>{otpCooldown ? timer : "verify email"}</button>
+                    <button type="button" disabled={otpCooldown} className={`${ otpCooldown ? "bg-gray-600 cursor-not-allowed" : "bg-purple-700 hover:bg-purple-900 cursor-pointer"} border transition-colors duration-300 text-white px-3 py-1.5 rounded-xl text-md`} onClick={verifyOTP}>{otpCooldown ? timer + "minutes": "verify email"}</button>
                 </div>
 
                 <div className={`${verifyEmail ? "block" : "hidden"}`}>
                     <InputForm inputRef={otpRef} type="text" label="OTP" isPassword={true} size="xs" text_size="xs" maxLength={6}/>
                 </div>
 
-                <div>
+                <div className="-mt-3">
                     <InputForm inputRef={passwordRef} type="password" label="Password" isPassword={true} size="md" text_size="md"/>
                 </div>
 
-                <div className="lg:flex gap-7">
+                <div className="lg:flex gap-7 mt-2">
                     <InputForm inputRef={firstNameRef} type="text" label="First Name" placeholder="Json" isPassword={false} size="ss" text_size="sm"/>
                     <InputForm inputRef={lastNameRef} type="text" label="Last Name" placeholder="Roy" isPassword={false} size="ss" text_size="sm"/>
                 </div>

@@ -10,9 +10,9 @@ export async function POST(req : NextRequest){
 
         if(user.success === false) return NextResponse.json({message : "Invalid Semantics"},{status : 422});
         else {
-            const findExistingUser = await prismaClient.user.findFirst({
+            const findExistingUser = await prismaClient.user.findUnique({
                 where : {
-                    email: body.email
+                    email: user.data.email
                 }
             });
 
@@ -20,12 +20,12 @@ export async function POST(req : NextRequest){
             else {
                 const { firstname, lastname , email , password } = user.data;
                 try{
-                    const hasedPassword = await bcrypt.hash(password,Number(process.env.SALT_ROUNDS) || 10);
+                    const hashedPassword = await bcrypt.hash(password,Number(process.env.SALT_ROUNDS) || 10);
                     await prismaClient.user.create({
                         data : {
                             name : firstname + " " + lastname,
                             email,
-                            password : hasedPassword
+                            password : hashedPassword
                         }
                     });
 
@@ -47,36 +47,3 @@ export async function POST(req : NextRequest){
         },{status:500})
     }
 }
-
-export async function GET(req:NextRequest){
-    const email = req.nextUrl.searchParams.get("email");
-    const otp = req.nextUrl.searchParams.get("otp");
-
-    if(!email || !otp) {
-        return NextResponse.json({
-            message: "Email/Otp not found !"
-        },{status:400})
-    }
-    try{
-        const verifyOtp = await prismaClient.otp.findUnique({
-            where:{
-                email
-            }
-        });
-
-        if(verifyOtp?.otp === otp) return NextResponse.json({
-            message: "Otp verified!",
-            success: true
-        },{status:200});
-        else return NextResponse.json({
-            message: "Invalid Otp",
-            success:false
-        },{status:400});
-    }catch(err){
-        console.error(err);
-        return NextResponse.json({
-            message:"Otp could not be verified !"
-        },{status:500})
-    }
-}
-

@@ -10,16 +10,16 @@ type InputProps = {
     readonly size : Size,
     readonly text_size : Size,
     readonly maxLength? : number
-    readonly inputRef?: React.RefObject<HTMLInputElement | null>
+    readonly inputRef?: React.Ref<HTMLInputElement>
     readonly disabled?: boolean
 }
 
 const width = {
-    xs: "lg:w-44 lg:p-3 p-2 ",
-    ss: "lg:w-60 lg:px-3.5 lg:py-2.5 ",
-    sm: "lg:w-sm lg:px-4 lg:py-2.5",
-    md: "lg:w-md lg:px-4 lg:py-2.5",
-    lg: "lg:w-lg lg:px-4.5 lg:py-2.5"
+    xs: "w-full lg:w-44 p-2 lg:p-3",
+    ss: "w-full lg:w-60 px-3 py-2 lg:px-3.5 lg:py-2.5",
+    sm: "w-full lg:w-sm px-3.5 py-2 lg:px-4 lg:py-2.5",
+    md: "w-full lg:w-md px-4 py-2 lg:px-4 lg:py-2.5",
+    lg: "w-full lg:w-lg px-4 py-2 lg:px-4.5 lg:py-2.5"
 };
 
 const textSize = {
@@ -33,8 +33,8 @@ const textSize = {
 const labelsize = {
     xs :"lg:text-sm mb-1",
     ss :"lg:text-sm mb-1",
-    sm: "lg:text-md mb-2",
-    md: "lg:text-lg mb-2",
+    sm: "lg:text-md mb-1.5",
+    md: "lg:text-lg mb-1.5",
     lg: "lg:text-xl mb-2"
 }
 
@@ -51,15 +51,15 @@ function PassWordInput( {Props} : Readonly<{Props: InputProps}>){
 
     const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false);
 
-    return <div className="relative w-fit">
+    return <div className="relative w-full">
                 <div>
                     <input ref={Props.inputRef}
                             type={visiblePassword ? "text" : "password"}
                             onBlur={() => setVisiblePassword(false)}
-                            className={`border-none mt-2 bg-[#384150] rounded-lg pr-10 ${width[Props.size]} ${textSize[Props.text_size]}`} />
+                            className={`w-full border-none mt-2 bg-[#384150] rounded-lg pr-11 ${width[Props.size]} ${textSize[Props.text_size]}`} />
                 </div>
                 
-                <button type="button" onClick={() => setVisiblePassword(!visiblePassword)} className="absolute right-4 top-8 -translate-y-1/2 cursor-pointer">
+                <button type="button" onClick={() => setVisiblePassword(!visiblePassword)} className="absolute right-4 lg:top-8 top-7 -translate-y-1/2 cursor-pointer">
                     {visiblePassword ? <Eye width={20} height={20}/> : <EyeOff width={20} height={20}/>}
                 </button>
         </div>
