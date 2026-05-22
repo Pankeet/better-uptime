@@ -22,8 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" > 
       <body className={`${alan.className}`}>
-        <Toaster position="top-center" reverseOrder={false} />
-        {children}
+          <Toaster position="top-center" reverseOrder={false} />
+          {children}
       </body>
     </html>
   );
