@@ -545,7 +545,7 @@ export function HomePage() {
                 className={`relative flex flex-col ${highlight ? "border-primary shadow-lg ring-1 ring-primary" : ""}`}
               >
                 {highlight && (
-                  <div className="absolute left-1/2 -translate-x-1/2">
+                  <div className="absolute left-1/5 -translate-x-1/2">
                     <Badge className="px-3 py-0.5 text-md">Most Popular</Badge>
                   </div>
                 )}
