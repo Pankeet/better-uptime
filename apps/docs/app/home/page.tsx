@@ -165,7 +165,7 @@ function PulsingDot() {
   )
 }
 
-export function HomePage() {
+export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
