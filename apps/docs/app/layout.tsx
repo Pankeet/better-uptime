@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@repo/ui/theme-provider";
-import { ModeToggle } from "@repo/ui/mode-toggle";
 import "./globals.css";
 
 const alan = localFont({

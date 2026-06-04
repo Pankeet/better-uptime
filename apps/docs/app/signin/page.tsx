@@ -1,8 +1,9 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import { useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { Heart, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Activity, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 
 export default function SignIn() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -36,7 +37,7 @@ export default function SignIn() {
         if (rememberMe) {
           localStorage.setItem("rememberEmail", email);
         }
-        window.location.href = "/dashboard";
+        globalThis.location.href = "/dashboard";
       }
     } catch (err: any) {
       console.error(err);
@@ -53,15 +54,15 @@ export default function SignIn() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-blue-600 fill-blue-600" />
+            <Activity className="w-8 h-8 text-white p-2 bg-black rounded-lg" />
             <span className="text-xl font-bold text-slate-900">Better Uptime</span>
           </div>
-          <a
+          <Link
             href="/"
             className="text-slate-600 hover:text-slate-900 transition-colors font-medium"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -70,7 +71,7 @@ export default function SignIn() {
           <div className="bg-white rounded-2xl shadow-xl border border-slate-200/50 p-8 sm:p-10">
             <div className="flex flex-col items-center mb-8">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center mb-4">
-                <Heart className="w-8 h-8 text-blue-600 fill-blue-600" />
+                <Activity className="w-8 h-8 text-blue-600 fill-blue-600" />
               </div>
               <h1 className="text-3xl font-bold text-slate-900 text-center">
                 Welcome Back
@@ -157,7 +158,7 @@ export default function SignIn() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-8 px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group shadow-lg hover:shadow-xl"
+                className="w-full mt-8 px-4 py-3 rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <>

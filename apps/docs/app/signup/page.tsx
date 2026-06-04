@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import {
-  Heart,
+  Activity,
   Mail,
   Lock,
   User,
@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   KeyRound,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function SignUp() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -150,17 +151,17 @@ export default function SignUp() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-blue-600 fill-blue-600" />
+            <Activity className="w-8 h-8 text-white p-2 bg-black rouded-lg" />
             <span className="text-xl font-bold text-slate-900">
               Better Uptime
             </span>
           </div>
-          <a
+          <Link
             href="/"
             className="text-slate-600 hover:text-slate-900 transition-colors font-medium"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </nav>
 

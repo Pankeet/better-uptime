@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Activity, ArrowRight, Bell, Check, ChevronRight, Globe, Monitor, Radio, Shield, Timer, TrendingUp, Zap, Menu, X, CircleCheck, CircleAlert as AlertCircle, Clock } from "lucide-react"
 import { Badge } from "@repo/ui/badge"
 import { Button } from "@repo/ui/button"
@@ -168,6 +169,7 @@ function PulsingDot() {
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(globalThis.scrollY > 16)
@@ -207,10 +209,10 @@ export default function HomePage() {
 
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <Button variant="ghost" size="sm" className="hidden md:inline-flex">
+            <Button variant="ghost" size="sm" className="hidden md:inline-flex" onClick={() => router.push("/signin")}>
               Sign In
             </Button>
-            <Button size="sm" className="hidden md:inline-flex">
+            <Button size="sm" className="hidden md:inline-flex" onClick={() => router.push("/signup")}>
               Get Started
             </Button>
             <Button
@@ -288,7 +290,7 @@ export default function HomePage() {
                 Start monitoring free
                 <ArrowRight />
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-8">
+              <Button size="lg" variant="outline" className="cursor-pointer w-full sm:w-auto rounded-full px-8" onClick={() => globalThis.location.href="https://github.com/Pankeet/better-uptime"}>
                 View on GitHub
               </Button>
             </div>
@@ -632,6 +634,7 @@ export default function HomePage() {
                   size="lg"
                   variant="secondary"
                   className="w-full rounded-full px-8 sm:w-auto"
+                  onClick={() => router.push("/signup")}
                 >
                   Create free account
                   <ArrowRight />
