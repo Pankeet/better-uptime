@@ -26,12 +26,7 @@ export default function RootLayout({
       <body className={`${alan.className}`}>
         <Toaster position="top-center" reverseOrder={false} />
          <ThemeProvider defaultTheme="system" storageKey="app-theme">
-          <header className="flex justify-between p-4">
-            <ModeToggle />
-          </header>
-
           <main>{children}</main>
-
         </ThemeProvider>
       </body>
     </html>

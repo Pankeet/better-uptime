@@ -170,8 +170,8 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16)
-    window.addEventListener("scroll", handleScroll)
+    const handleScroll = () => setScrolled(globalThis.scrollY > 16)
+    globalThis.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -186,11 +186,11 @@ export default function HomePage() {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-primary">
-              <Activity className="size-4 text-primary-foreground" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary">
+              <Activity className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold tracking-tight">Better Uptime</span>
+            <span className="text-xl font-bold leading-none tracking-tight">Better Uptime</span>
           </div>
 
           <nav className="hidden items-center gap-6 md:flex">
@@ -225,7 +225,7 @@ export default function HomePage() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="border-t border-border bg-background px-4 py-4 md:hidden">
+          <div className="fixed top-16 left-0 right-0 z-60 border-t border-border bg-background px-4 py-4 md:hidden shadow-lg">
             <nav className="flex flex-col gap-3">
               {NAV_LINKS.map((link) => (
                 <a
