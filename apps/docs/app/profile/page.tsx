@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react"
+import { useState,useEffect } from "react"
+import axios from "axios";
 import { User, Bell, LogOut, ChevronRight, Trash2, Plus, Globe, TrendingUp, CircleAlert as AlertCircle, Check, Eye, EyeOff, Settings, Shield, Copy, Clock } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/avatar"
 import { Badge } from "@repo/ui/badge"
@@ -7,7 +8,6 @@ import { Button } from "@repo/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@repo/ui/card"
@@ -32,14 +32,33 @@ import {
 } from "@repo/ui/alert-dialog"
 import { ModeToggle } from "@repo/ui/mode-toggle"
 
-const MOCK_USER = {
-  name: "Alex Johnson",
-  email: "alex@example.com",
-  initials: "AJ",
-  avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=alex",
-  joinedDate: "January 15, 2024",
-  plan: "Pro",
-  apiKey: "sk_live_1a2b3c4d5e6f7g8h9i0j",
+type User = {
+  name: string;
+  email: string;
+  avatar?: string;
+};
+
+
+async function getUserProfile(){
+  const email = localStorage.getItem("rememberEmail");
+  if(!email){
+    alert("Cannot get user details ! please signin");
+    location.href="/home";
+    return null;
+  }
+  try{
+    const res = await axios.get("/api/user-profile",{
+      params: {email}
+    });
+
+    return res?.data;
+  }catch (err: any) {
+      console.error(err);
+      alert("Failed to get user profile !");
+      localStorage.removeItem("rememberEmail");
+      location.href="/home";
+      return null;
+    }
 }
 
 const MOCK_MONITORED_SITES = [
@@ -127,10 +146,18 @@ function NotificationIcon({ type }: Readonly<{ type: "alert" | "recovery" | "inf
 }
 
 export default function DashboardPage() {
-  const [showApiKey, setShowApiKey] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+  const [userDetails,setUserDetails] = useState<User>();
 
+  useEffect(() => {
+    getUserProfile().then(setUserDetails);
+  },[])
+
+  if (!userDetails) {
+    return <div>Loading...</div>;
+  }
   return (
+    
     <div className="min-h-svh bg-background text-foreground">
       {/* Header */}
       <header className="border-b border-border bg-card sticky top-0 z-40">
@@ -147,15 +174,15 @@ export default function DashboardPage() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Avatar size="sm">
-                    <AvatarImage src={MOCK_USER.avatar} alt={MOCK_USER.name} />
-                    <AvatarFallback>{MOCK_USER.initials}</AvatarFallback>
+                    <AvatarImage src={userDetails.avatar} alt={userDetails.name} />
+                    <AvatarFallback>{userDetails.name}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="px-2 py-1.5">
-                  <p className="text-sm font-semibold">{MOCK_USER.name}</p>
-                  <p className="text-xs text-muted-foreground">{MOCK_USER.email}</p>
+                  <p className="text-sm font-semibold">{userDetails.name}</p>
+                  <p className="text-xs text-muted-foreground">{userDetails.email}</p>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -167,7 +194,10 @@ export default function DashboardPage() {
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem className="text-destructive" onClick={() => {
+                  localStorage.removeItem("rememberEmail");
+                  location.href = "/home";
+                }}>
                   <LogOut className="size-4 mr-2" />
                   Sign Out
                 </DropdownMenuItem>
@@ -181,7 +211,7 @@ export default function DashboardPage() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight">
-            Welcome back, {MOCK_USER.name.split(" ")[0]}
+            Welcome back, {userDetails.name.split(" ")[0]}
           </h1>
           <p className="mt-2 text-muted-foreground">
             Manage your account, monitored sites, and notifications all in one place.
@@ -233,7 +263,7 @@ export default function DashboardPage() {
                 </p>
               </div>
               <Button>
-                <Plus className="size-4" />
+                <Plus className="size-4"/>
                 Add Site
               </Button>
             </div>
@@ -304,7 +334,7 @@ export default function DashboardPage() {
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between sm:items-center">
                   <div>
-                    <p className="font-semibold">You&apos;re on the {MOCK_USER.plan} plan</p>
+                    <p className="font-semibold">You&apos;re on the <b>pro</b> plan</p>
                     <p className="mt-1 text-sm text-muted-foreground">
                       50 monitored URLs • 1-minute checks • 30-day history
                     </p>
@@ -335,12 +365,12 @@ export default function DashboardPage() {
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-4">
                     <Avatar size="lg">
-                      <AvatarImage src={MOCK_USER.avatar} alt={MOCK_USER.name} />
-                      <AvatarFallback>{MOCK_USER.initials}</AvatarFallback>
+                      <AvatarImage src={userDetails.avatar} alt={userDetails.name} />
+                      <AvatarFallback>{userDetails.name}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold">{MOCK_USER.name}</p>
-                      <p className="text-sm text-muted-foreground">Joined {MOCK_USER.joinedDate}</p>
+                      <p className="font-semibold">{userDetails.name}</p>
+                      <p className="text-sm text-muted-foreground">Joined 16-09-2004</p>
                     </div>
                   </div>
                   <Button variant="outline" className="w-full">
@@ -357,54 +387,16 @@ export default function DashboardPage() {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Full Name</Label>
-                    <InputForm defaultValue={MOCK_USER.name} />
+                    <InputForm defaultValue={userDetails.name} />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Email Address</Label>
-                    <InputForm type="email" defaultValue={MOCK_USER.email} />
+                    <InputForm type="email" defaultValue={userDetails.email} />
                   </div>
                   <Button>Save Changes</Button>
                 </CardContent>
               </Card>
             </div>
-
-            {/* API Key Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <Shield className="size-4" />
-                  API Key
-                </CardTitle>
-                <CardDescription>Use this key to access the Better Uptime API</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <InputForm
-                    type={showApiKey ? "text" : "password"}
-                    value={MOCK_USER.apiKey}
-                    readOnly
-                    className="font-mono"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setShowApiKey(!showApiKey)}
-                  >
-                    {showApiKey ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => navigator.clipboard.writeText(MOCK_USER.apiKey)}
-                  >
-                    <Copy className="size-4" />
-                  </Button>
-                </div>
-                <Button variant="outline" className="w-full">
-                  Regenerate Key
-                </Button>
-              </CardContent>
-            </Card>
 
             {/* Danger Zone */}
             <Card className="border-destructive/50">

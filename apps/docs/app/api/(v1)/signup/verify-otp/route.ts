@@ -5,10 +5,7 @@ export async function POST(req:NextRequest){
 
     try{
         const body = await req.json();
-        console.log(body);
         const { email, otp } = body.data;
-        console.log(otp);
-        console.log(email);
 
         if(!email || !otp) {
             return NextResponse.json({
@@ -30,12 +27,6 @@ export async function POST(req:NextRequest){
                 },{status:404});
         }
 
-        console.log({
-            dbOtp: verifyOtp.otp,
-            receivedOtp: otp,
-            dbType: typeof verifyOtp.otp,
-            reqType: typeof otp
-        });
         const hasExpired = Date.now() - verifyOtp.createdAt.getTime();
         const fiveMinutes = 5 * 60 * 1000;
 

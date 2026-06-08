@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Activity, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 
@@ -11,6 +11,12 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    if(localStorage.getItem("rememberEmail")){
+      location.href="/profile";
+    }
+  })
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
@@ -37,12 +43,14 @@ export default function SignIn() {
         if (rememberMe) {
           localStorage.setItem("rememberEmail", email);
         }
-        globalThis.location.href = "/dashboard";
+        globalThis.location.href = "/profile";
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       const errorMessage =
-        err?.response?.data?.message || "Failed to sign in. Please try again.";
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? String(err.response.data.message)
+          : "Failed to sign in. Please try again.";
       toast.error(errorMessage, { id: loadingToast });
     } finally {
       setLoading(false);
@@ -50,7 +58,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-slate-100">
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">

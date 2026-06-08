@@ -15,6 +15,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+function formatTime(seconds: number) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+
 export default function SignUp() {
   const emailRef = useRef<HTMLInputElement>(null);
   const otpRef = useRef<HTMLInputElement>(null);
@@ -46,12 +52,6 @@ export default function SignUp() {
     }, 1000);
   }
 
-  function formatTime(seconds: number) {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  }
-
   async function verifyOTP() {
     if (otpCooldown) return;
     setOtpCooldown(true);
@@ -75,13 +75,17 @@ export default function SignUp() {
         setVerifyEmail(false);
         toast.error(response.data.message, { id: toastVerify });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setVerifyEmail(false);
       setOtpCooldown(false);
       console.error(err);
-      toast.error(err?.response?.data?.message || "Failed to send OTP", {
-        id: toastVerify,
-      });
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || "Failed to send OTP", {
+          id: toastVerify,
+        });
+      } else {
+        toast.error("Failed to send OTP", { id: toastVerify });
+      }
     }
   }
 
@@ -123,7 +127,7 @@ export default function SignUp() {
               res?.data?.message || "Account created successfully!",
               { id: loadingToast }
             );
-            window.location.href = "/signin";
+            globalThis.location.href = "/profile";
           }
         } catch (e: unknown) {
           if (axios.isAxiosError(e))
